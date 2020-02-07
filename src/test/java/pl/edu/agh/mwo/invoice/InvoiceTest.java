@@ -49,7 +49,7 @@ public class InvoiceTest {
 		invoice.addProduct(new DairyProduct("Maslanka", new BigDecimal("100")));
 		invoice.addProduct(new OtherProduct("Wino", new BigDecimal("10")));
 		Assert.assertThat(new BigDecimal("310"), Matchers.comparesEqualTo(invoice.getNetPrice()));
-	}
+	} 
 
 	@Test
 	public void testInvoiceHasProperTaxValueForManyProduct() {

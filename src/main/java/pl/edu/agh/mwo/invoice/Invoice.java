@@ -14,12 +14,15 @@ public class Invoice {
 	}
 	
 	public void addProduct(Product product, Integer quantity) {
+		if (quantity <= 0){
+			throw new IllegalArgumentException("Product quantity cannot be null or negative");
+		}
 		this.products.put(product, quantity);
 	}
 
 	public BigDecimal getNetPrice() {
 		BigDecimal sum = BigDecimal.ZERO;
-		
+		 
 		for(Product product : this.products.keySet()) {
 			Integer quantity = this.products.get(product);
 			sum = sum.add(product.getPrice().multiply(new BigDecimal(quantity)));
