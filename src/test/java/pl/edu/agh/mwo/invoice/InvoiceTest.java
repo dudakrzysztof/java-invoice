@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -129,4 +130,39 @@ public class InvoiceTest {
         int number2 = new Invoice().getNumber();
         Assert.assertThat(number1, Matchers.lessThan(number2));
     }
+    
+    @Test
+    public void testTwoInvoiceHaveConsequentNumbers() {
+    	int number1 = invoice.getNumber();
+    	int number2 = new Invoice().getNumber();
+    	Assert.assertEquals(number1, number2 - 1);
+    }
+    
+    @Test
+    public void testEachProductInNewLine() {
+    	invoice.addProduct(new TaxFreeProduct("Zubroweczka", new BigDecimal("20")), 1);
+    	invoice.addProduct(new TaxFreeProduct("Bols", new BigDecimal("21")), 1);
+    	String productList = invoice.getProductList();
+    	int productListLen = productList.split(System.getProperty("line.separator")).length;
+    	Assert.assertEquals(productListLen, 4);
+    }
+    
+    @Test
+    public void testNumberOfPosition() {
+    	invoice.addProduct(new TaxFreeProduct("Wyborowa", new BigDecimal("25")), 1);
+    	String productList = invoice.getProductList();
+    	int numberOfPosition = Integer.parseInt(productList.substring(productList.length() - 1)); 
+    	Assert.assertEquals(numberOfPosition, 1);
+    }
+    
+    @Test
+    public void testDuplicationOfProducts() {
+    	Product product = new DairyProduct("Bocian", new BigDecimal("25"));
+    	invoice.addProduct(product, 1);
+    	invoice.addProduct(product, 1);
+    	Map<Product, Integer> products = invoice.getProducts();
+    	int quantity = products.get(product);
+    	Assert.assertEquals(quantity, 2);
+    }
+    
 }
