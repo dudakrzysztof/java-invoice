@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.invoice.product;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public abstract class Product {
     private final String name;
@@ -8,6 +9,8 @@ public abstract class Product {
     private final BigDecimal price;
 
     private final BigDecimal taxPercent;
+    
+    protected LocalDate currentDate = LocalDate.now();
 
     protected Product(String name, BigDecimal price, BigDecimal tax) {
         if (name == null
@@ -37,5 +40,9 @@ public abstract class Product {
 
     public BigDecimal getPriceWithTax() {
         return price.multiply(taxPercent).add(price);
+    }
+    
+    public void setCurrentDate(int year, int month, int day) {
+    	this.currentDate = LocalDate.of( year , month , day );
     }
 }

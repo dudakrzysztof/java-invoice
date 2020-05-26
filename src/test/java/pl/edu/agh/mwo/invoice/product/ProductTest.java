@@ -54,4 +54,20 @@ public class ProductTest {
     public void testProductWithNegativePrice() {
         new TaxFreeProduct("Mandarynki", new BigDecimal("-1.00"));
     }
+    @Test
+    public void testBottleOfWine() {
+    	Product product = new BottleOfWine("Patyk", new BigDecimal("100"));
+    	Assert.assertThat(new BigDecimal("128.56"), Matchers.comparesEqualTo(product.getPriceWithTax()));
+    }
+    @Test
+    public void testFuelCanisterInHoliday() {
+    	Product product = new FuelCanister("PiwkoPaliwko", new BigDecimal("100"));
+    	product.setCurrentDate(2020, 4, 26);
+    	Assert.assertThat(new BigDecimal("123"), Matchers.comparesEqualTo(product.getPriceWithTax()));
+    }
+    @Test
+    public void testFuelCanisterInRegularDay() {
+    	Product product = new BottleOfWine("PiwkoPaliwko", new BigDecimal("100"));
+    	Assert.assertThat(new BigDecimal("128.56"), Matchers.comparesEqualTo(product.getPriceWithTax()));
+    }
 }
